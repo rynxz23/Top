@@ -1,0 +1,684 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GameTop — Top-up Cepat</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#0B0B0F;
+      --panel:#0F1720;
+      --muted:#B0B0B8;
+      --primary:#0066FF; /* electric blue */
+      --accent:#9D4EDD;  /* neon purple */
+      --white:#FFFFFF;
+      --radius:12px;
+      --glass: rgba(255,255,255,0.03);
+      --card-shadow: 0 10px 30px rgba(0,102,255,0.08);
+      --success: #2ECC71;
+      --danger: #FF4C4C;
+    }
+
+    html,body{
+      height:100%;
+      margin:0;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(0,102,255,0.06), transparent),
+                  radial-gradient(800px 400px at 90% 90%, rgba(157,78,221,0.04), transparent),
+                  var(--bg);
+      color:var(--white);
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.4;
+    }
+
+    .container{
+      max-width:1200px;
+      margin:32px auto;
+      padding:24px;
+    }
+
+    /* NAVBAR */
+    header.nav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom:24px;
+    }
+
+    .brand{
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+    .logo {
+      width:48px;height:48px;border-radius:10px;
+      display:grid;place-items:center;
+      background: linear-gradient(135deg,var(--primary),var(--accent));
+      box-shadow: 0 6px 18px rgba(0,102,255,0.18);
+      font-family: Orbitron, monospace;
+      font-weight:700;
+      color:var(--white);
+    }
+    .brand h1{ margin:0; font-family:Orbitron; font-size:20px; letter-spacing:0.4px;}
+    nav.menu { display:flex; gap:18px; align-items:center; color:var(--muted); }
+    nav.menu a{ color:var(--muted); text-decoration:none; font-weight:600; }
+    .cta-btn {
+      background: linear-gradient(90deg,var(--primary),var(--accent));
+      border:none;color:var(--white); padding:10px 16px;border-radius:12px;font-weight:700;
+      box-shadow: var(--card-shadow);
+      cursor:pointer;
+    }
+
+    /* MAIN HERO */
+    .hero{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+      border-radius:18px;
+      padding:28px;
+      display:grid;
+      grid-template-columns: 1fr 420px;
+      gap:24px;
+      align-items:start;
+      box-shadow: 0 6px 40px rgba(0,0,0,0.5);
+    }
+
+    .hero-left h2{
+      font-family: Orbitron;
+      font-size:36px;
+      margin:0 0 8px 0;
+      line-height:1.05;
+    }
+    .hero-left p{ color:var(--muted); margin:0 0 18px 0; }
+
+    /* game selector */
+    .game-selector{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      background:var(--panel);
+      padding:10px;border-radius:14px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.6);
+    }
+    .select-input{ flex:1; display:flex; gap:8px; align-items:center; }
+    .select-input input{
+      width:100%;
+      background:transparent;border:none;outline:none;color:var(--white);
+      font-weight:600;font-size:16px;
+    }
+    .select-input .icon { width:40px;height:40px;border-radius:10px; display:grid; place-items:center;background:linear-gradient(90deg,var(--primary),var(--accent));}
+
+    .start-btn{
+      background:transparent; border:2px solid rgba(255,255,255,0.06); padding:10px 14px; color:var(--white); border-radius:12px; cursor:pointer;
+      font-weight:700;
+    }
+    .start-btn.primary{ background: linear-gradient(90deg,var(--primary),var(--accent)); border:none; }
+
+    /* hero-right: quick-order card */
+    .quick-card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+      border-radius:14px; padding:18px; box-shadow: var(--card-shadow);
+    }
+    .quick-card h4{ margin:0 0 12px 0; font-family:Orbitron;}
+    .form-row{ margin-bottom:12px; }
+    label.small{ display:block; font-size:12px; color:var(--muted); margin-bottom:6px; }
+    .input{
+      background:var(--glass); padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);
+      display:flex; gap:8px; align-items:center;
+    }
+    .input input{ background:transparent;border:none;outline:none;color:var(--white); width:100%; font-weight:600; }
+    .denom-grid{ display:flex; gap:8px; flex-wrap:wrap; }
+    .denom{ padding:10px 12px; border-radius:10px; min-width:88px; text-align:center; cursor:pointer; border:1px solid transparent; background: rgba(255,255,255,0.02); font-weight:700; }
+    .denom.selected{ background: linear-gradient(90deg,var(--primary),var(--accent)); color:white; box-shadow:0 8px 24px rgba(0,102,255,0.14); border-color:rgba(255,255,255,0.04); }
+
+    .payments{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:8px;}
+    .pay{ background:rgba(255,255,255,0.02); padding:10px;border-radius:10px; display:flex; gap:10px; align-items:center; cursor:pointer; border:2px solid transparent; justify-content:center; font-weight:700; }
+    .pay.selected{ border-color: rgba(157,78,221,0.5); box-shadow: 0 10px 30px rgba(157,78,221,0.06); background:linear-gradient(180deg, rgba(157,78,221,0.06), transparent); }
+
+    .microcopy{ font-size:13px; color:var(--muted); margin-top:8px; }
+
+    .pay-actions{ display:flex; gap:10px; margin-top:12px; }
+    .pay-actions button{ flex:1;padding:12px;border-radius:12px;border:none;font-weight:700; cursor:pointer; }
+
+    /* Popular games */
+    .section{ margin-top:28px; }
+    .cards{ display:grid; grid-template-columns: repeat(4,1fr); gap:16px; margin-top:12px; }
+    .game-card{
+      padding:12px; border-radius:14px; background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+      display:flex; gap:12px; align-items:center; box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+    .game-card:hover{ transform: translateY(-6px); box-shadow: 0 18px 40px rgba(0,0,0,0.7); }
+    .game-thumb{ width:72px; height:72px; border-radius:10px; background: linear-gradient(135deg,var(--primary),var(--accent)); display:grid; place-items:center; font-weight:800; font-family:Orbitron; }
+    .game-info h5{ margin:0; font-size:16px; }
+    .game-info p{ margin:4px 0 0 0; color:var(--muted); font-size:13px; }
+
+    /* 3-step flow */
+    .flow{ display:flex; gap:18px; margin-top:18px; }
+    .step{ background:var(--panel); padding:16px; border-radius:12px; flex:1; text-align:center; }
+    .step h3{ margin:0; font-family:Orbitron; font-size:18px; }
+    .step p{ margin:8px 0 0 0; color:var(--muted); font-size:13px; }
+
+    /* Promo banner */
+    .promo{
+      margin-top:22px; padding:18px; border-radius:14px;
+      background: linear-gradient(90deg,var(--primary),var(--accent));
+      display:flex; justify-content:space-between; align-items:center;
+    }
+    .promo p{ margin:0; font-weight:700; }
+
+    /* Trust & payments strip */
+    .trust{ display:flex; gap:18px; align-items:center; margin-top:18px; flex-wrap:wrap; }
+    .trust .badge{ background:rgba(255,255,255,0.03); padding:10px 12px; border-radius:10px; display:flex; gap:10px; align-items:center; color:var(--muted); }
+
+    /* Footer */
+    footer.site-footer{
+      margin-top:32px; padding:18px; border-radius:12px; background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+      display:flex; gap:24px; justify-content:space-between; align-items:center; flex-wrap:wrap;
+    }
+    .footer-links{ display:flex; gap:40px; color:var(--muted); }
+    .payment-logos{ display:flex; gap:12px; align-items:center; }
+
+    /* Modal */
+    .modal-backdrop{
+      position:fixed; inset:0; background:linear-gradient(180deg, rgba(0,0,0,0.6), rgba(0,0,0,0.75));
+      display:none; align-items:center; justify-content:center; z-index:9999;
+    }
+    .modal{
+      width:420px; max-width:92%; background:var(--panel); border-radius:14px; padding:20px; box-shadow:0 20px 60px rgba(0,0,0,0.8);
+    }
+    .modal h4{ margin:0 0 12px 0; font-family:Orbitron; }
+    .modal .row{ display:flex; justify-content:space-between; margin-bottom:8px; color:var(--muted); }
+    .modal .actions{ display:flex; gap:10px; margin-top:14px; }
+    .btn-ghost{ background:transparent; color:var(--muted); border:1px solid rgba(255,255,255,0.04); padding:10px 12px;border-radius:10px; cursor:pointer; }
+    .btn-primary{ background: linear-gradient(90deg,var(--primary),var(--accent)); padding:10px 12px;border-radius:10px;border:none;color:white;font-weight:800; cursor:pointer; flex:1; }
+
+    /* Loader / processing */
+    .loader{
+      display:inline-block;width:20px;height:20px;border-radius:50%;
+      border:3px solid rgba(255,255,255,0.08);
+      border-top-color:var(--primary);
+      animation: spin 1s linear infinite;
+      margin-right:10px;
+    }
+    @keyframes spin { to{ transform:rotate(360deg);} }
+
+    /* small screens (mobile) */
+    @media (max-width: 900px){
+      .container{ padding:16px; max-width: 100%; }
+      .hero{ grid-template-columns:1fr; padding:18px; gap:12px; }
+      .cards{ grid-template-columns: repeat(2,1fr); }
+      .flow{ flex-direction:column; }
+      nav.menu{ display:none; }
+      .brand h1{ font-size:18px; }
+      .game-card{ padding:10px; }
+      .quick-card{ order:2; }
+      .hero-left{ order:1; }
+      .payments{ grid-template-columns:repeat(3,1fr); }
+    }
+
+    /* tiny mobile - 375x812 specifics */
+    @media (max-width: 420px){
+      .hero-left h2{ font-size:22px; }
+      .cards{ grid-template-columns: 1fr; }
+      .game-thumb{ width:64px;height:64px; }
+    }
+
+    /* Error toast */
+    .toast{
+      position:fixed; right:20px; bottom:20px; background:var(--danger); color:white; padding:12px 16px; border-radius:10px; display:none; z-index:99999;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- NAVBAR -->
+    <header class="nav">
+      <div class="brand">
+        <div class="logo">GT</div>
+        <div>
+          <h1>GameTop</h1>
+          <div style="font-size:12px;color:var(--muted)">Top-up instan • Aman • Cepat</div>
+        </div>
+      </div>
+
+      <nav class="menu" aria-label="Main menu">
+        <a href="#home">Home</a>
+        <a href="#promo">Promo</a>
+        <a href="#bantuan">Bantuan</a>
+        <a href="#masuk">Masuk</a>
+      </nav>
+
+      <button class="cta-btn">Daftar Sekarang</button>
+    </header>
+
+    <!-- HERO -->
+    <main class="hero" id="home" role="main">
+      <div class="hero-left">
+        <h2>Top-up Game Favoritmu dalam <span style="color:var(--primary)">3 Langkah</span> Cepat!</h2>
+        <p>Masukkan Player ID, pilih nominal, lalu bayar — saldo langsung masuk. Tersedia e-wallet, bank, dan minimarket.</p>
+
+        <div class="game-selector" aria-hidden="false">
+          <div class="select-input" role="combobox" aria-expanded="false" aria-owns="game-list">
+            <div class="icon">🎮</div>
+            <input id="gameSearch" placeholder="Cari atau pilih game (mis. Free Fire, MLBB, PUBG)..." aria-label="Pilih game" list="games" />
+            <datalist id="games">
+              <option value="Free Fire">
+              <option value="Mobile Legends">
+              <option value="PUBG Mobile">
+              <option value="Valorant">
+              <option value="Genshin Impact">
+              <option value="AXE">
+            </datalist>
+          </div>
+          <button class="start-btn primary" id="heroStart">Mulai Top-up</button>
+        </div>
+
+        <!-- Popular Games -->
+        <section class="section">
+          <h3 style="font-family:Orbitron;margin:0">🔥 Game Terpopuler Minggu Ini</h3>
+          <div class="cards" aria-label="Game populer">
+            <article class="game-card" data-game="Free Fire">
+              <div class="game-thumb">FF</div>
+              <div class="game-info">
+                <h5>Free Fire</h5>
+                <p>Battle royale populer — top-up diamond instan</p>
+              </div>
+              <div style="margin-left:auto;">
+                <button class="start-btn" data-action="quick" data-game="Free Fire">Top-up Sekarang</button>
+              </div>
+            </article>
+
+            <article class="game-card" data-game="Mobile Legends">
+              <div class="game-thumb">ML</div>
+              <div class="game-info">
+                <h5>Mobile Legends</h5>
+                <p>Rank cepat naik dengan diamond</p>
+              </div>
+              <div style="margin-left:auto;">
+                <button class="start-btn" data-action="quick" data-game="Mobile Legends">Top-up</button>
+              </div>
+            </article>
+
+            <article class="game-card" data-game="PUBG Mobile">
+              <div class="game-thumb">PM</div>
+              <div class="game-info">
+                <h5>PUBG Mobile</h5>
+                <p>Acara dan bundle eksklusif</p>
+              </div>
+              <div style="margin-left:auto;">
+                <button class="start-btn" data-action="quick" data-game="PUBG Mobile">Top-up</button>
+              </div>
+            </article>
+
+            <article class="game-card" data-game="Valorant">
+              <div class="game-thumb">VA</div>
+              <div class="game-info">
+                <h5>Valorant</h5>
+                <p>V-Bucks & passes</p>
+              </div>
+              <div style="margin-left:auto;">
+                <button class="start-btn" data-action="quick" data-game="Valorant">Top-up</button>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <!-- 3-step flow -->
+        <section class="section">
+          <h3 style="font-family:Orbitron;margin:0">💎 Cara Top-Up di GameTop</h3>
+          <div class="flow">
+            <div class="step">
+              <h3>1. Masukkan Player ID</h3>
+              <p>Pastikan ID/Server benar agar saldo masuk ke akunmu.</p>
+            </div>
+            <div class="step">
+              <h3>2. Pilih Nominal</h3>
+              <p>Dari 50 Diamond sampai paket besar, pilih yang cocok.</p>
+            </div>
+            <div class="step">
+              <h3>3. Pilih Pembayaran</h3>
+              <p>Tersedia OVO, DANA, GoPay, Bank, dan Indomaret.</p>
+            </div>
+          </div>
+          <div style="margin-top:12px;">
+            <button class="start-btn primary" id="startFlow">Mulai Sekarang</button>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- Quick order card (right) -->
+      <aside class="quick-card" aria-label="Quick top-up">
+        <h4>Quick Top-up</h4>
+
+        <div class="form-row">
+          <label class="small">Pilih Game</label>
+          <div class="input" id="gameChoice">
+            <div style="width:40px;height:40px;border-radius:8px;background:linear-gradient(90deg,var(--primary),var(--accent));display:grid;place-items:center;font-weight:800;font-family:Orbitron;">GT</div>
+            <input id="selGame" placeholder="Pilih game (cth. Free Fire)" aria-label="Game terpilih">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label class="small">Masukkan Player ID</label>
+          <div class="input">
+            <input id="playerId" placeholder="Masukkan Player ID / UID" aria-label="Player ID" />
+          </div>
+          <div class="microcopy">Contoh: 12345678 — Periksa dua kali sebelum lanjut.</div>
+        </div>
+
+        <div class="form-row">
+          <label class="small">Pilih Nominal</label>
+          <div class="denom-grid" id="denomGrid" role="list">
+            <div class="denom" data-value="50">50 💎</div>
+            <div class="denom" data-value="100">100 💎</div>
+            <div class="denom" data-value="250">250 💎</div>
+            <div class="denom" data-value="500">500 💎</div>
+            <div class="denom" data-value="1000">1000 💎</div>
+            <div class="denom" data-value="5000">5000 💎</div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label class="small">Metode Pembayaran</label>
+          <div class="payments" id="paymentsGrid" role="list">
+            <div class="pay" data-pay="DANA">DANA</div>
+            <div class="pay" data-pay="OVO">OVO</div>
+            <div class="pay" data-pay="GoPay">GoPay</div>
+            <div class="pay" data-pay="BCA">BCA</div>
+            <div class="pay" data-pay="Mandiri">Mandiri</div>
+            <div class="pay" data-pay="Indomaret">Indomaret</div>
+          </div>
+        </div>
+
+        <div class="microcopy">Microcopy: Setelah bayar, proses biasanya instan. Simpan bukti pembayaran jika diperlukan.</div>
+
+        <div class="pay-actions">
+          <button class="btn-ghost" id="resetBtn">Reset</button>
+          <button class="btn-primary" id="proceedBtn">Lanjutkan</button>
+        </div>
+
+      </aside>
+    </main>
+
+    <!-- Promo -->
+    <div class="promo" id="promo">
+      <div>
+        <p style="font-size:16px">🎁 Cashback 10% untuk pengguna baru — kode: NEWGT10</p>
+        <div style="font-size:13px;color:rgba(255,255,255,0.9)">Berlaku sampai 30 November 2025. S&K berlaku.</div>
+      </div>
+      <div>
+        <button class="start-btn primary" onclick="alert('Kode klaim otomatis disalin!')">Klaim Sekarang</button>
+      </div>
+    </div>
+
+    <!-- Trust badges & payment logos -->
+    <div class="trust">
+      <div class="badge">✅ Official Partner</div>
+      <div class="badge">🔒 100% Secure Payment</div>
+      <div class="badge">🏆 Trusted by Gamers</div>
+
+      <div style="margin-left:auto;display:flex;gap:10px;align-items:center">
+        <div class="badge">OVO</div>
+        <div class="badge">DANA</div>
+        <div class="badge">GoPay</div>
+        <div class="badge">BCA</div>
+        <div class="badge">Indomaret</div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div style="display:flex;gap:18px;align-items:flex-start;flex:1;">
+        <div>
+          <h4 style="margin:0;font-family:Orbitron">GameTop</h4>
+          <div style="color:var(--muted);margin-top:6px;max-width:320px">Platform top-up game instan. Aman, cepat, dan dukungan 24/7.</div>
+        </div>
+        <div class="footer-links">
+          <div>
+            <strong>Produk</strong>
+            <div style="color:var(--muted);margin-top:6px">Voucher • Diamond • Pass</div>
+          </div>
+          <div>
+            <strong>Bantuan</strong>
+            <div style="color:var(--muted);margin-top:6px">FAQ • Kontak • Refund</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align:right;">
+        <div class="payment-logos">
+          <div style="font-weight:700;color:var(--muted)">Payment:</div>
+          <div class="badge">OVO</div>
+          <div class="badge">DANA</div>
+          <div class="badge">GoPay</div>
+          <div class="badge">BCA</div>
+          <div class="badge">Indomaret</div>
+        </div>
+        <div style="color:var(--muted);margin-top:8px;font-size:13px">© 2025 GameTop. All Rights Reserved.</div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Modal -->
+  <div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal" role="document" aria-labelledby="modalTitle">
+      <h4 id="modalTitle">Konfirmasi Pembelian</h4>
+      <div class="row"><div>Game</div><div id="confGame">—</div></div>
+      <div class="row"><div>Player ID</div><div id="confPlayer">—</div></div>
+      <div class="row"><div>Nominal</div><div id="confNominal">—</div></div>
+      <div class="row"><div>Pembayaran</div><div id="confPay">—</div></div>
+
+      <div class="microcopy" id="modalNote">Pastikan data benar. Transaksi akan diproses setelah Anda klik Bayar.</div>
+      <div class="actions">
+        <button class="btn-ghost" id="modalCancel">Batal</button>
+        <button class="btn-primary" id="modalPay">
+          <span id="modalPayText">Bayar Sekarang</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Error example</div>
+
+  <script>
+    // Utilities & state
+    const get = (sel) => document.querySelector(sel);
+    const getAll = (sel) => Array.from(document.querySelectorAll(sel));
+    let state = {
+      game: '',
+      playerId: '',
+      denom: null,
+      payment: null
+    };
+
+    // Elements
+    const heroStart = get('#heroStart');
+    const gameSearch = get('#gameSearch');
+    const quickGameInput = get('#selGame');
+    const quickGameCardBtns = getAll('[data-action="quick"]');
+    const denomEls = getAll('#denomGrid .denom');
+    const payEls = getAll('#paymentsGrid .pay');
+    const playerIdInput = get('#playerId');
+    const proceedBtn = get('#proceedBtn');
+    const resetBtn = get('#resetBtn');
+    const modalBackdrop = get('#modalBackdrop');
+    const modalCancel = get('#modalCancel');
+    const modalPay = get('#modalPay');
+    const confGame = get('#confGame');
+    const confPlayer = get('#confPlayer');
+    const confNominal = get('#confNominal');
+    const confPay = get('#confPay');
+    const modalPayText = get('#modalPayText');
+    const toast = get('#toast');
+    const startFlowBtn = get('#startFlow');
+
+    // Helpers
+    function showToast(msg, timeout=4000){
+      toast.textContent = msg;
+      toast.style.display = 'block';
+      setTimeout(()=> toast.style.display='none', timeout);
+    }
+
+    function setSelectedDenom(el){
+      denomEls.forEach(d=>d.classList.remove('selected'));
+      if(el){ el.classList.add('selected'); state.denom = el.dataset.value; }
+    }
+    function setSelectedPay(el){
+      payEls.forEach(p=>p.classList.remove('selected'));
+      if(el){ el.classList.add('selected'); state.payment = el.dataset.pay; }
+    }
+
+    // Pre-fill game if quick buttons clicked
+    quickGameCardBtns.forEach(btn=>{
+      btn.addEventListener('click', (e)=>{
+        const g = btn.dataset.game || btn.getAttribute('data-game');
+        quickGameInput.value = g;
+        state.game = g;
+        // also bring focus to player id
+        playerIdInput.focus();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    });
+
+    // Hero start -> copy to quick
+    heroStart.addEventListener('click', ()=>{
+      const g = gameSearch.value.trim();
+      if(!g){
+        showToast('Pilih game terlebih dahulu (mis. Free Fire).');
+        return;
+      }
+      quickGameInput.value = g;
+      state.game = g;
+      playerIdInput.focus();
+      // scroll to quick card (mobile)
+      const card = document.querySelector('.quick-card');
+      if(card) card.scrollIntoView({behavior:'smooth'});
+    });
+
+    // Denom selection
+    denomEls.forEach(d=>{
+      d.addEventListener('click', ()=> setSelectedDenom(d));
+    });
+
+    // Payment selection
+    payEls.forEach(p=>{
+      p.addEventListener('click', ()=> setSelectedPay(p));
+    });
+
+    // Reset
+    resetBtn.addEventListener('click', ()=>{
+      quickGameInput.value=''; playerIdInput.value=''; setSelectedDenom(null); setSelectedPay(null);
+      state = {game:'', playerId:'', denom:null, payment:null};
+    });
+
+    // Proceed -> show modal with summary & validation
+    proceedBtn.addEventListener('click', ()=>{
+      state.game = quickGameInput.value.trim();
+      state.playerId = playerIdInput.value.trim();
+
+      // Validation
+      if(!state.game){
+        showToast('Silakan pilih game terlebih dahulu.');
+        return;
+      }
+      if(!state.playerId || state.playerId.length < 3){
+        showToast('Masukkan Player ID yang valid (minimal 3 karakter).');
+        return;
+      }
+      if(!state.denom){
+        showToast('Silakan pilih nominal/top-up.');
+        return;
+      }
+      if(!state.payment){
+        showToast('Silakan pilih metode pembayaran.');
+        return;
+      }
+
+      // Fill modal
+      confGame.textContent = state.game;
+      confPlayer.textContent = state.playerId;
+      confNominal.textContent = state.denom + ' 💎';
+      confPay.textContent = state.payment;
+
+      // open modal
+      modalBackdrop.style.display = 'flex';
+      modalBackdrop.setAttribute('aria-hidden','false');
+    });
+
+    // modal cancel
+    modalCancel.addEventListener('click', closeModal);
+    function closeModal(){
+      modalBackdrop.style.display='none';
+      modalBackdrop.setAttribute('aria-hidden','true');
+      modalPayText.textContent = 'Bayar Sekarang';
+      modalPay.disabled = false;
+    }
+
+    // modal pay -> simulate processing with loader + error handling
+    modalPay.addEventListener('click', async ()=>{
+      // Simulate network processing & show loader
+      modalPay.disabled = true;
+      modalPayText.innerHTML = '<span class="loader"></span> Memproses...';
+
+      // fake async processing (use setTimeout)
+      await new Promise(res => setTimeout(res, 1800));
+
+      // Demo: randomly fail to show error state (10% chance)
+      const failed = Math.random() < 0.1;
+
+      if(failed){
+        // show error state inside modal
+        modalPayText.textContent = 'Gagal. Coba Lagi';
+        showToast('⚠️ Transaksi gagal. Silakan coba lagi atau pilih metode lain.');
+        modalPay.disabled = false;
+      } else {
+        modalPayText.textContent = 'Berhasil!';
+        modalPay.disabled = false;
+        // show success microcopy & reset
+        confNominal.textContent += ' ✅';
+        // close after short delay
+        setTimeout(()=> {
+          closeModal();
+          showToast('Transaksi berhasil! Saldo segera masuk.', 5000);
+          // optional: reset form
+          resetBtn.click();
+        }, 1100);
+      }
+    });
+
+    // Small flow: startFlow button scrolls to quick card
+    startFlowBtn.addEventListener('click', ()=>{
+      const card = document.querySelector('.quick-card');
+      if(card) card.scrollIntoView({behavior:'smooth'});
+    });
+
+    // Accessibility: close modal on Escape
+    document.addEventListener('keydown', (e)=>{
+      if(e.key === 'Escape' && modalBackdrop.style.display === 'flex') closeModal();
+    });
+
+    // Example: highlight denom based on numeric typed in
+    // (Bonus: choose denom by writing "100" on keyboard while focused)
+    document.addEventListener('keyup', (e)=>{
+      if(document.activeElement === playerIdInput) return;
+      if(e.key >= '0' && parseInt(e.key) >= 0){
+        // no-op, but available for further features
+      }
+    });
+
+    // Demonstrate error toast on page load if required asset missing
+    // (Commented out; keep as example)
+    // showToast('Demo: Sistem siap', 2500);
+  </script>
+</body>
+</html>

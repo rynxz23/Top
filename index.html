@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>At Store | Voucher Game</title>
+  <style>
+    /* ---------- STYLE DASAR ---------- */
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background-color: #0d0d0d;
+      color: #e0e0e0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background: linear-gradient(90deg, #000000, #1a1a1a);
+      padding: 1rem 2rem;
+      text-align: center;
+      border-bottom: 2px solid #ff0000;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+      color: #ff3b3b;
+      letter-spacing: 2px;
+    }
+
+    header p {
+      font-size: 0.95rem;
+      color: #999;
+    }
+
+    main {
+      flex: 1;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 1.5rem;
+    }
+
+    .profile-card {
+      background: #1a1a1a;
+      border-radius: 15px;
+      padding: 2rem;
+      max-width: 500px;
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+      transition: transform 0.3s;
+    }
+
+    .profile-card:hover {
+      transform: scale(1.02);
+    }
+
+    .profile-card h2 {
+      color: #ff3b3b;
+      margin-bottom: 0.3rem;
+    }
+
+    .profile-card h3 {
+      color: #ccc;
+      font-weight: normal;
+      margin-bottom: 1rem;
+    }
+
+    .profile-card p {
+      font-size: 1rem;
+      color: #aaa;
+    }
+
+    .product-section {
+      max-width: 700px;
+      background: #141414;
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
+    }
+
+    .product-section h2 {
+      color: #ff3b3b;
+      margin-bottom: 1rem;
+    }
+
+    .product-section p {
+      color: #bbb;
+      margin-bottom: 1rem;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      background: #ff3b3b;
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      background: #ff5555;
+      transform: translateY(-3px);
+    }
+
+    footer {
+      background: #0a0a0a;
+      padding: 1rem;
+      text-align: center;
+      border-top: 1px solid #222;
+      color: #666;
+      font-size: 0.85rem;
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.6rem;
+      }
+      .profile-card, .product-section {
+        padding: 1.2rem;
+      }
+      .btn {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>At Store</h1>
+    <p>Tempat Resmi Voucher Game Bergaransi</p>
+  </header>
+
+  <main>
+    <section class="profile-card">
+      <h2>Aryatama Raiyan Ramadhan</h2>
+      <h3>Leo Man | Eksekutif & EO Manager PT XYZ</h3>
+      <p>Seorang pribadi penuh energi dengan hobi unik.  
+      Menggabungkan semangat kepemimpinan dan kreativitas untuk membangun pengalaman event terbaik.</p>
+    </section>
+
+    <section class="product-section">
+      <h2>Voucher Game Premium</h2>
+      <p>Dapatkan voucher game berbagai platform — mulai dari Steam, Mobile Legends, Genshin Impact, hingga PlayStation Store.  
+      Harga bersahabat, proses cepat, dan pelayanan profesional langsung dari Aryatama Store.</p>
+
+      <div class="button-group">
+        <a href="chatgpt.html" class="btn">ChatGPT</a>
+        <a href="gemini.html" class="btn">Gemini</a>
+        <a href="claude.html" class="btn">Claude</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 At Store | All Rights Reserved.
+  </footer>
+
+  <script>
+    // Efek interaktif sederhana menggunakan JavaScript
+    document.querySelectorAll(".btn").forEach(button => {
+      button.addEventListener("click", () => {
+        console.log(`Navigasi ke: ${button.textContent}`);
+      });
+    });
+  </script>
+</body>
+</html>

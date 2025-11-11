@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameTop - Top-up Diamond Game Murah & Cepat</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Dasar & Reset */
+        body {
+            background-color: #121212; /* Latar Belakang Gelap */
+            color: #FFFFFF;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Warna Kunci */
+        :root {
+            --electric-blue: #0066FF;
+            --neon-purple: #FF00FF; /* Magenta terang sebagai pengganti neon purple */
+            --dark-bg: #1A1A1A;
+            --text-light: #E0E0E0;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--dark-bg);
+            padding: 15px 0;
+            border-bottom: 2px solid var(--electric-blue);
+        }
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--electric-blue);
+        }
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 600;
+        }
+        .cta-login {
+            background-color: var(--neon-purple);
+            color: #FFF;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 0;
+            text-align: center;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('game-bg.jpg') center center / cover; /* Placeholder gambar */
+        }
+        .hero h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 48px; /* Desktop H1 */
+            font-weight: 900;
+            color: #FFFFFF;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+        .hero p {
+            color: var(--text-light);
+            font-size: 18px;
+            margin-bottom: 40px;
+        }
+
+        /* Flow Card Styling */
+        .topup-flow {
+            background-color: var(--dark-bg);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 0 20px rgba(0, 102, 255, 0.5); /* Shadow Electric Blue */
+            margin-top: -60px; /* Menarik ke atas, masuk ke Hero */
+            position: relative;
+            display: flex; /* Untuk layout desktop */
+            gap: 20px;
+        }
+
+        .flow-step {
+            flex: 1;
+            padding: 20px;
+            border: 1px solid rgba(0, 102, 255, 0.3);
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        .flow-step:focus-within {
+             border-color: var(--electric-blue);
+             box-shadow: 0 0 10px var(--electric-blue);
+        }
+        .flow-step h3 {
+            color: var(--electric-blue);
+            font-size: 20px;
+            border-bottom: 3px solid var(--neon-purple);
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+        }
+
+        /* Form & Input Styling */
+        input[type="text"], select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid var(--dark-bg);
+            background-color: #252525;
+            color: #FFFFFF;
+            border-radius: 4px;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+        input[type="text"]:focus, select:focus {
+            outline: none;
+            border-color: var(--electric-blue);
+            box-shadow: 0 0 5px var(--electric-blue);
+        }
+
+        /* Grid Denom & Pembayaran */
+        .selection-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+        .selection-item {
+            background-color: #333;
+            padding: 10px;
+            border-radius: 4px;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .selection-item:hover, .selected {
+            background-color: var(--electric-blue);
+            font-weight: 600;
+        }
+        .payment-logo {
+            width: 80%; /* Untuk ikon pembayaran */
+            max-width: 60px;
+            height: auto;
+        }
+
+        /* CTA Utama */
+        .btn-bayar {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--neon-purple);
+            color: #FFF;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            margin-top: 20px;
+            transition: background-color 0.2s;
+        }
+        .btn-bayar:hover {
+            background-color: #E600E6; /* Purple lebih gelap */
+        }
+
+        /* Footer */
+        footer {
+            background-color: #000;
+            padding: 40px 0;
+            text-align: center;
+        }
+        .payment-logos-footer img {
+            max-height: 30px;
+            margin: 0 10px;
+            opacity: 0.7;
+        }
+
+        /* Media Query untuk Mobile */
+        @media (max-width: 768px) {
+            .topup-flow {
+                flex-direction: column;
+                margin-top: 0;
+            }
+            .hero h1 {
+                font-size: 36px;
+            }
+            .selection-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="logo">GAMETOP</div>
+            <nav style="display: flex; align-items: center;">
+                <a href="#">Top-up</a>
+                <a href="#">Promo</a>
+                <a href="#">Bantuan</a>
+                <a href="#" class="cta-login">LOGIN</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>TOP-UP DIAMOND CEPAT, HARGA TERBAIK.</h1>
+            <p>Pilih game favorit Anda dan dapatkan diamond dalam hitungan detik.</p>
+
+            <input type="text" placeholder="Cari atau pilih game (e.g., Mobile Legends, Free Fire)" style="width: 80%; max-width: 600px; margin-bottom: 40px;">
+            
+            <div style="display: flex; justify-content: center; gap: 20px; overflow-x: auto; padding-bottom: 10px;">
+                <div class="game-card" style="width: 150px; background-color: #222; padding: 10px; border-radius: 8px; border: 1px solid var(--electric-blue);">
+                    
+
+
+
+                    <p style="margin-top: 5px; font-weight: 600;">Mobile Legends</p>
+                </div>
+                <div class="game-card" style="width: 150px; background-color: #222; padding: 10px; border-radius: 8px; border: 1px solid var(--electric-blue);">
+                    
+
+
+
+                    <p style="margin-top: 5px; font-weight: 600;">Free Fire</p>
+                </div>
+                <div class="game-card" style="width: 150px; background-color: #222; padding: 10px; border-radius: 8px; border: 1px solid var(--electric-blue);">
+                    
+                    <p style="margin-top: 5px; font-weight: 600;">Genshin Impact</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container" style="padding-top: 40px; padding-bottom: 40px;">
+        <div class="topup-flow">
+
+            <div class="flow-step">
+                <h3>1. Masukkan Player ID</h3>
+                <input type="text" placeholder="Masukkan Player ID Anda">
+                <p style="color: var(--text-light); font-size: 12px; margin-top: -10px;">*ID Anda aman dan terenkripsi. Cek lokasi ID di menu pengaturan game.</p>
+                <button style="background-color: var(--electric-blue); color: white; padding: 10px; border: none; border-radius: 4px; width: 100%;">Cek Server/ID</button>
+            </div>
+
+            <div class="flow-step">
+                <h3>2. Pilih Nominal</h3>
+                <p style="color: var(--text-light); font-size: 14px; margin-bottom: 10px;">Pilih nominal diamond/voucher:</p>
+                <div class="selection-grid">
+                    <div class="selection-item">10 Diamond<br>Rp 3.000</div>
+                    <div class="selection-item selected">50 Diamond<br>Rp 15.000</div>
+                    <div class="selection-item">100 Diamond<br>Rp 30.000</div>
+                    <div class="selection-item">200 Diamond<br>Rp 60.000</div>
+                    <div class="selection-item">500 Diamond<br>Rp 150.000</div>
+                    <div class="selection-item">1000 Diamond<br>Rp 300.000</div>
+                </div>
+            </div>
+
+            <div class="flow-step">
+                <h3>3. Pilih Pembayaran</h3>
+                <p style="color: var(--text-light); font-size: 14px; margin-bottom: 10px;">Pembayaran cepat dan aman via:</p>
+                <div class="selection-grid" style="grid-template-columns: repeat(2, 1fr);">
+                    <div class="selection-item"><img src="ovo-logo.png" alt="OVO" class="payment-logo">OVO</div>
+                    <div class="selection-item"><img src="dana-logo.png" alt="DANA" class="payment-logo">DANA</div>
+                    <div class="selection-item"><img src="gopay-logo.png" alt="GoPay" class="payment-logo">GoPay</div>
+                    <div class="selection-item"><img src="bca-logo.png" alt="Bank BCA" class="payment-logo">Transfer Bank</div>
+                </div>
+                
+                <p style="text-align: right; margin-top: 20px; font-size: 16px;">Total: <span style="font-size: 24px; font-weight: 700; color: var(--neon-purple);">Rp 15.000</span></p>
+
+                <button class="btn-bayar">Bayar Sekarang</button>
+            </div>
+
+        </div>
+    </section>
+    
+    <section class="container" style="padding: 40px 0;">
+        <div style="background-color: var(--neon-purple); padding: 30px; border-radius: 12px; text-align: center;">
+            <h2 style="font-family: 'Montserrat', sans-serif; margin: 0; font-size: 32px;">DISKON 10% KHUSUS PENGGUNA BARU!</h2>
+            <p style="margin-top: 10px;">Gunakan kode **TOPUPPERDANA** saat checkout.</p>
+        </div>
+    </section>
+
+    <section class="container" style="padding: 40px 0; text-align: center;">
+        <h2 style="color: var(--electric-blue); font-size: 28px;">TERPERCAYA & AMAN</h2>
+        <div style="display: flex; justify-content: center; gap: 40px; margin-top: 20px;">
+            <div style="color: var(--text-light); font-size: 14px;">[Icon Keamanan]<br>**1 JUTA+** Transaksi Aman</div>
+            <div style="color: var(--text-light); font-size: 14px;">[Icon Sertifikat]<br>Partner Resmi Developer Game</div>
+            <div style="color: var(--text-light); font-size: 14px;">[Icon Cepat]<br>Diamond Masuk **3 Detik**</div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="payment-logos-footer" style="margin-bottom: 20px;">
+                <p style="color: var(--text-light); font-weight: 600;">Didukung oleh:</p>
+                
+                
+
+[Image of DANA Logo]
+
+                
+                
+
+[Image of Bank Logo]
+
+                
+            </div>
+            <p style="color: #666;">&copy; 2025 GameTop. Hak Cipta Dilindungi.</p>
+        </div>
+    </footer>
+
+    <div id="confirmation-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); z-index: 1000;">
+        <div style="background-color: var(--dark-bg); max-width: 400px; margin: 100px auto; padding: 30px; border-radius: 12px; border: 2px solid var(--neon-purple); text-align: center;">
+            <h2 style="color: var(--neon-purple); border-bottom: 2px solid var(--electric-blue); padding-bottom: 10px;">Konfirmasi Transaksi</h2>
+            <p>Game: **Mobile Legends**</p>
+            <p>Player ID: **12345678 (Server 9999)**</p>
+            <p>Nominal: **50 Diamond**</p>
+            <hr style="border-color: #333; margin: 15px 0;">
+            <p style="font-size: 18px;">Total Harga:</p>
+            <p style="font-size: 32px; font-weight: 700; color: var(--electric-blue); margin-top: -10px;">Rp 15.000</p>
+            <p>Metode Pembayaran: **DANA**</p>
+            <button style="background-color: var(--electric-blue); color: white; padding: 12px 20px; border: none; border-radius: 6px; margin-right: 10px; cursor: pointer;">Lanjutkan Pembayaran</button>
+            <button style="background-color: #555; color: white; padding: 12px 20px; border: none; border-radius: 6px; cursor: pointer;">Batal</button>
+        </div>
+    </div>
+
+</body>
+</html>
